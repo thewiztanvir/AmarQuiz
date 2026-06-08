@@ -616,7 +616,7 @@ function showResults() {
     html += '</div>';
 
     if (q.explanation) {
-      html += '<p class="review-explanation">\uD83D\uDCA1 ' + escHtml(q.explanation) + '</p>';
+      html += '<p class="review-explanation"><strong style="color: var(--accent); margin-right: 4px;">Explanation:</strong> ' + escHtml(q.explanation) + '</p>';
     }
 
     rc.innerHTML = html;
