@@ -67,14 +67,20 @@
           <p class="field-hint">Your key is stored only in memory and never sent to our servers.</p>
         </div>
 
-        <div class="field-group" id="modelFieldGroup" style="display:none">
-          <label class="field-label" for="modelInput">Model <span class="optional">(optional)</span></label>
-          <input
-            type="text"
-            id="modelInput"
-            class="field-input"
-            placeholder="e.g. gpt-4o, gemini-2.0-flash…"
-          />
+        <div class="field-group" id="modelFieldGroup">
+          <label class="field-label" for="modelSelect">AI Model <span class="optional">(optional)</span></label>
+          <select id="modelSelect" class="field-select">
+            <!-- Options populated dynamically based on provider -->
+          </select>
+          
+          <div id="customModelWrap" style="display: none; margin-top: 8px;">
+            <input
+              type="text"
+              id="modelInput"
+              class="field-input"
+              placeholder="e.g. gpt-4o, gemini-2.0-flash…"
+            />
+          </div>
         </div>
 
         <button class="btn-primary" id="btnContinue">
@@ -185,6 +191,6 @@
 
   </div><!-- /app -->
 
-  <script src="app.js?v=6"></script>
+  <script src="app.js?v=7"></script>
 </body>
 </html>

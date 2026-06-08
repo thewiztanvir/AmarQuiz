@@ -23,6 +23,8 @@ var screenGenerate  = $('screen-generate');
 var providerPills   = document.querySelectorAll('.pill[data-provider]');
 var apiKeyInput     = $('apiKeyInput');
 var toggleVis       = $('toggleVis');
+var modelSelect     = $('modelSelect');
+var customModelWrap = $('customModelWrap');
 var modelInput      = $('modelInput');
 var modelFieldGroup = $('modelFieldGroup');
 var btnContinue     = $('btnContinue');
@@ -73,6 +75,27 @@ document.body.appendChild(toastWrap);
   svg.prepend(defs);
 }());
 
+// ── Model presets by provider ──────────────────────────
+var MODEL_PRESETS = {
+  gemini: [
+    { value: 'gemini-2.5-flash', text: 'Gemini 2.5 Flash (Recommended)' },
+    { value: 'gemini-2.5-pro', text: 'Gemini 2.5 Pro' },
+    { value: 'gemini-2.0-flash', text: 'Gemini 2.0 Flash' },
+    { value: 'custom', text: 'Custom Model ID...' }
+  ],
+  openai: [
+    { value: 'gpt-4o-mini', text: 'GPT-4o Mini (Recommended)' },
+    { value: 'gpt-4o', text: 'GPT-4o' },
+    { value: 'o3-mini', text: 'o3 Mini' },
+    { value: 'custom', text: 'Custom Model ID...' }
+  ],
+  claude: [
+    { value: 'claude-3-5-haiku-20241022', text: 'Claude 3.5 Haiku (Recommended)' },
+    { value: 'claude-3-5-sonnet-20241022', text: 'Claude 3.5 Sonnet' },
+    { value: 'custom', text: 'Custom Model ID...' }
+  ]
+};
+
 // ══════════════════════════════════════════════════════
 //   PROVIDER SELECTION
 // ══════════════════════════════════════════════════════
@@ -84,13 +107,12 @@ function setProvider(provider) {
 
   state.provider = provider;
 
-  // Clear stale model so it never leaks to a different provider
+  // Clear stale model data
   modelInput.value = '';
   state.model = '';
 
-  // Show model field only for OpenAI / Claude
-  modelFieldGroup.style.display =
-    (provider === 'openai' || provider === 'claude') ? 'flex' : 'none';
+  // Populate models dropdown for the chosen provider
+  populateModelDropdown(provider);
 
   updateModelPlaceholder();
   clearApiKeyError();
@@ -103,11 +125,36 @@ providerPills.forEach(function(pill) {
   });
 });
 
+function populateModelDropdown(provider) {
+  modelSelect.innerHTML = '';
+  var models = MODEL_PRESETS[provider] || [];
+  models.forEach(function(m) {
+    var opt = document.createElement('option');
+    opt.value = m.value;
+    opt.textContent = m.text;
+    modelSelect.appendChild(opt);
+  });
+  
+  // Trigger change handler to show/hide custom field
+  handleModelSelectChange();
+}
+
+function handleModelSelectChange() {
+  if (modelSelect.value === 'custom') {
+    customModelWrap.style.display = 'block';
+    modelInput.focus();
+  } else {
+    customModelWrap.style.display = 'none';
+  }
+}
+
+modelSelect.addEventListener('change', handleModelSelectChange);
+
 function updateModelPlaceholder() {
   var map = {
     openai: 'e.g. gpt-4o, gpt-3.5-turbo...',
     claude: 'e.g. claude-3-5-sonnet-20241022...',
-    gemini: ''
+    gemini: 'e.g. gemini-2.5-pro...'
   };
   modelInput.placeholder = map[state.provider] || '';
 }
@@ -172,8 +219,14 @@ function handleContinue() {
   clearApiKeyError();
 
   state.apiKey = key;
-  // Gemini field is hidden — never read a stale model string for it
-  state.model = (state.provider !== 'gemini') ? modelInput.value.trim() : '';
+
+  // Retrieve selected model
+  var selVal = modelSelect.value;
+  if (selVal === 'custom') {
+    state.model = modelInput.value.trim();
+  } else {
+    state.model = selVal;
+  }
 
   var names = { gemini: 'Gemini', openai: 'OpenAI', claude: 'Claude' };
   headerMeta.innerHTML =
@@ -622,4 +675,5 @@ function escHtml(str) {
 }
 
 // ── Init ────────────────────────────────────────────────
+setProvider('gemini');
 showScreen(screenApi);
