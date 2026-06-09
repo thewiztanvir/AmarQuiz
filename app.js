@@ -33,14 +33,16 @@ var btnContinue     = $('btnContinue');
 var headerMeta      = $('headerMeta');
 var btnChangeKey    = $('btnChangeKey');
 
-var topicInput      = $('topicInput');
-var numQuestions    = $('numQuestions');
-var difficulty      = $('difficulty');
-var typePills       = document.querySelectorAll('.type-pill[data-type]');
-var btnGenerate     = $('btnGenerate');
-var genBtnText      = $('genBtnText');
-var genBtnIcon      = $('genBtnIcon');
-var spinner         = $('spinner');
+var topicInput          = $('topicInput');
+var numQuestions        = $('numQuestions');
+var customQuestionsWrap = $('customQuestionsWrap');
+var customNumQuestions  = $('customNumQuestions');
+var difficulty          = $('difficulty');
+var typePills           = document.querySelectorAll('.type-pill[data-type]');
+var btnGenerate         = $('btnGenerate');
+var genBtnText          = $('genBtnText');
+var genBtnIcon          = $('genBtnIcon');
+var spinner             = $('spinner');
 
 var quizContainer   = $('quizContainer');
 var quizMeta        = $('quizMeta');
@@ -164,6 +166,10 @@ function handleModelSelectChange() {
 }
 
 modelSelect.addEventListener('change', handleModelSelectChange);
+numQuestions.addEventListener('change', handleQuestionCountChange);
+customNumQuestions.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') btnGenerate.click();
+});
 
 function updateModelPlaceholder() {
   var map = {
@@ -172,6 +178,26 @@ function updateModelPlaceholder() {
     gemini: 'e.g. gemini-2.5-pro...'
   };
   modelInput.placeholder = map[state.provider] || '';
+}
+
+function handleQuestionCountChange() {
+  if (numQuestions.value === 'custom') {
+    customQuestionsWrap.style.display = 'flex';
+    customNumQuestions.focus();
+  } else {
+    customQuestionsWrap.style.display = 'none';
+  }
+}
+
+function getQuestionCount() {
+  if (numQuestions.value === 'custom') {
+    var count = parseInt(customNumQuestions.value, 10);
+    if (Number.isNaN(count) || count < 1 || count > 100) {
+      return null;
+    }
+    return count;
+  }
+  return parseInt(numQuestions.value, 10) || null;
 }
 
 // ══════════════════════════════════════════════════════
@@ -298,7 +324,16 @@ btnGenerate.addEventListener('click', function() {
   setGenerating(true);
   resetQuizUI();
 
-  var prompt = buildPrompt(topic, +numQuestions.value, difficulty.value, state.questionType);
+  var questionCount = getQuestionCount();
+  if (!questionCount) {
+    toast('Please enter a valid question count between 1 and 100.', 'error');
+    if (numQuestions.value === 'custom') customNumQuestions.focus();
+    else numQuestions.focus();
+    setGenerating(false);
+    return;
+  }
+
+  var prompt = buildPrompt(topic, questionCount, difficulty.value, state.questionType);
 
   callAI(prompt).then(function(raw) {
     var quiz = parseQuiz(raw);
