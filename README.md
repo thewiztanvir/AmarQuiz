@@ -70,6 +70,8 @@ AmarQuiz is a static application and requires no build system.
    http://localhost:8000
    ```
 
+> Tip: Serving the app locally is recommended to avoid browser security restrictions with `file://` access. If the UI loads correctly, you can also open `index.html` directly in your browser for quick testing.
+
 ---
 
 ## Architecture
