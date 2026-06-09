@@ -23,6 +23,7 @@ var screenGenerate  = $('screen-generate');
 var providerPills   = document.querySelectorAll('.pill[data-provider]');
 var apiKeyInput     = $('apiKeyInput');
 var toggleVis       = $('toggleVis');
+var apiGuide        = $('apiGuide');
 var modelSelect     = $('modelSelect');
 var customModelWrap = $('customModelWrap');
 var modelInput      = $('modelInput');
@@ -115,7 +116,21 @@ function setProvider(provider) {
   populateModelDropdown(provider);
 
   updateModelPlaceholder();
+  updateApiKeyGuide(provider);
   clearApiKeyError();
+}
+
+function updateApiKeyGuide(provider) {
+  if (!apiGuide) return;
+  var html = '';
+  if (provider === 'gemini') {
+    html = 'To get your key, open <strong><a href="https://aistudio.google.com/" target="_blank" rel="noopener">Google AI Studio</a></strong>, sign in, and click <strong>Get API key</strong>. Gemini offers a free tier for developers.';
+  } else if (provider === 'openai') {
+    html = 'To get your key, sign in to the <strong><a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">OpenAI Developer Platform</a></strong> and generate a new secret key. Make sure your account has active credits.';
+  } else if (provider === 'claude') {
+    html = 'To get your key, sign in to the <strong><a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">Anthropic Console</a></strong> and select <strong>API Keys</strong>. Ensure billing is configured for key activation.';
+  }
+  apiGuide.innerHTML = html;
 }
 
 // Wire every pill via addEventListener — no inline onclick needed

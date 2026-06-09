@@ -779,6 +779,97 @@ svg.score-ring defs { display: block; }
 ::-webkit-scrollbar-thumb:hover { background: rgba(124,58,237,0.5); }
 
 /* ============================================================
+   API GUIDE BOX
+   ============================================================ */
+.api-guide {
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-top: 8px;
+}
+.api-guide strong {
+  color: var(--text);
+}
+.api-guide a {
+  color: var(--accent-2);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color var(--transition);
+}
+.api-guide a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+/* ============================================================
+   COLLAPSIBLE FAQ PANEL
+   ============================================================ */
+.help-details {
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.01);
+  transition: background var(--transition);
+}
+.help-details[open] {
+  background: rgba(255, 255, 255, 0.02);
+}
+.help-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+.help-summary::-webkit-details-marker {
+  display: none;
+}
+.help-summary::after {
+  content: '';
+  width: 14px;
+  height: 14px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b7a9d' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  transition: transform var(--transition);
+}
+.help-details[open] .help-summary::after {
+  transform: rotate(180deg);
+}
+.help-content {
+  padding: 0 16px 16px;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+  border-top: 1px solid var(--glass-border);
+  padding-top: 12px;
+}
+.help-content p {
+  margin-bottom: 10px;
+}
+.help-content p:last-child {
+  margin-bottom: 0;
+}
+.help-content strong {
+  color: var(--text);
+}
+.help-content ol {
+  margin-left: 18px;
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ============================================================
    RESPONSIVE
    ============================================================ */
 @media (max-width: 600px) {
