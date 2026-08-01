@@ -1,93 +1,36 @@
-# AmarQuiz
-
-AmarQuiz is a polished, enterprise-inspired quiz generation platform built for modern teams, educators, and product designers. It delivers instant quiz creation, adaptive question sets, and real-time answer evaluation through direct integration with Gemini, OpenAI, and Claude AI models.
-
-Watch the demo video: [https://youtu.be/SGZkGHqyyOk](https://youtu.be/SGZkGHqyyOk)
-
-Live URL: [amarquiz.netlify.app](https://amarquiz.netlify.app)
-
----
-
-## Overview
-
-AmarQuiz is engineered to feel like a production-grade SaaS experience. It combines intuitive UI, fast API orchestration, and strong privacy controls to help users generate quizzes with confidence and speed.
-
-- Trusted AI providers: Gemini, OpenAI, Anthropic Claude
-- Flexible quiz formats: multiple choice, true/false, and mixed-style assessments
-- Optimized for low latency, rich interaction, and clean presentation
-
----
-
-## What Makes AmarQuiz Stand Out
-
-- **Unified AI Provider Support**: One interface across Gemini, OpenAI, and Claude for consistent quiz authoring and scoring.
-- **Smart Quiz Customization**: Configure total questions, difficulty levels, subject focus, and response layout in seconds.
-- **Secure Client-First Architecture**: All API keys stay in browser memory, avoiding server-side credential storage.
-- **Modern UI/UX**: Responsive glassmorphism design, polished typography, and interactive feedback components provide a premium product feel.
-- **Mobile-First Presentation**: A dedicated mobile layout for quiz flow with optimized question card scaling for very small screens.
-- **Production-Ready Documentation**: Clear setup guidance, well-organized architecture, and polished release notes for contributors.
-
----
-
-## Product Highlights
-
-- Rapid quiz creation from any user prompt or topic
-- Compact, maintainable static front-end with zero backend dependency
-- Real-time quiz scoring and answer validation in-browser
-- Clean, developer-friendly codebase for fast iteration
-
----
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
 
-### Prerequisites
-- Modern web browser: Chrome, Firefox, Safari, Edge
-- Active API key from one of the supported providers:
-  - Google AI Studio (Gemini)
-  - OpenAI Developer Platform
-  - Anthropic Console (Claude)
+First, run the development server:
 
-### Local Setup
-AmarQuiz is a static application and requires no build system.
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/thewiztanvir/AmarQuiz.git
-   cd AmarQuiz
-   ```
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-2. Serve the files locally:
-   ```bash
-   python -m http.server 8000
-   ```
-   or
-   ```bash
-   npx serve .
-   ```
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-3. Open your browser and visit:
-   ```text
-   http://localhost:8000
-   ```
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-> Tip: Serving the app locally is recommended to avoid browser security restrictions with `file://` access. If the UI loads correctly, you can also open `index.html` directly in your browser for quick testing.
+## Learn More
 
----
+To learn more about Next.js, take a look at the following resources:
 
-## Architecture
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-- `index.html` — clean semantic markup for the quiz interface and configuration controls
-- `style.css` — refined styling, responsive layouts, and polished animation states
-- `app.js` — application engine managing user input, API payloads, provider selection, and scoring workflows
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-### Privacy and Data Flow
-AmarQuiz is built as a client-side API client. User credentials and request payloads are handled directly in the browser, with zero backend logging:
-- Gemini: `generativelanguage.googleapis.com`
-- OpenAI: `api.openai.com`
-- Claude: `api.anthropic.com`
+## Deploy on Vercel
 
----
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for details.
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
