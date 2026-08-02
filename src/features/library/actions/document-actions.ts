@@ -54,7 +54,9 @@ async function extractTextFromDocument(docId: string, file: File, fileType: stri
     const buffer = Buffer.from(await file.arrayBuffer());
 
     if (fileType === "pdf") {
-      const pdfParse = (await import("pdf-parse")).default;
+      const { createRequire } = await import("module");
+      const require = createRequire(import.meta.url);
+      const pdfParse = require("pdf-parse");
       const data = await pdfParse(buffer);
       text = data.text;
     } else if (fileType === "docx") {
