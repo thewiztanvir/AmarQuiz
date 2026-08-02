@@ -63,10 +63,14 @@ export function SignUpForm() {
   const handleSocial = async (provider: "google" | "github") => {
     setSocialLoading(provider);
     try {
-      await signIn.social({
+      const { data, error } = await signIn.social({
         provider,
         callbackURL: "/dashboard",
       });
+      if (error) {
+        setServerError(error.message || `Failed to sign up with ${provider}`);
+        setSocialLoading(null);
+      }
     } catch {
       setServerError("OAuth sign-up failed. Please try again.");
       setSocialLoading(null);

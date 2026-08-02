@@ -1,13 +1,12 @@
 import Link from "next/link";
 import { ArrowRight, Sparkles, Shield, BrainCircuit, LineChart } from "lucide-react";
 import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
+export const dynamic = "force-dynamic";
+
 export default async function LandingPage() {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  const { data: session } = await auth.getSession();
 
   if (session?.user) {
     redirect("/dashboard");

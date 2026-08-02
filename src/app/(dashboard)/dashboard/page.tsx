@@ -9,9 +9,7 @@ export const metadata = {
 };
 
 export default async function DashboardPage() {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  const { data: session } = await auth.getSession();
 
   if (!session?.user) {
     redirect("/sign-in");

@@ -52,10 +52,14 @@ export function SignInForm() {
   const handleSocial = async (provider: "google" | "github") => {
     setSocialLoading(provider);
     try {
-      await signIn.social({
+      const { data, error } = await signIn.social({
         provider,
         callbackURL: callbackUrl,
       });
+      if (error) {
+        setServerError(error.message || `Failed to sign in with ${provider}`);
+        setSocialLoading(null);
+      }
     } catch {
       setServerError("OAuth sign-in failed. Please try again.");
       setSocialLoading(null);
